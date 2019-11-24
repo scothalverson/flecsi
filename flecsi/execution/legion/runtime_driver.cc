@@ -69,6 +69,10 @@ runtime_driver(const Legion::Task * task,
     clog(info) << "MPI num_colors is " << num_colors << std::endl;
   }
 
+  int rank; 
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  std::cout << rank << " of " << num_colors << " says hey there " << std::endl;
+
   // Get the input arguments from the Legion runtime
   const Legion::InputArgs & args = Legion::Runtime::get_input_args();
 
