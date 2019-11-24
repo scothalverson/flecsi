@@ -276,13 +276,14 @@ legion_context_policy_t::connect_with_mpi(Legion::Context & ctx,
   Legion::Runtime * runtime) {
   int size;
   MPI_Comm_size(MPI_COMM_WORLD, &size);
-
+  int rank; 
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   LegionRuntime::Arrays::Rect<1> launch_bounds(
     LegionRuntime::Arrays::Point<1>(0),
     LegionRuntime::Arrays::Point<1>(size - 1));
 
   context_t::instance().set_all_processes(launch_bounds);
-
+  std::cout << rank << " of " << size << " in connect_with_mpi" << std::endl;
   // FIXME: Does this do anything?
   // Both the application and Legion mappers have access to
   // the mappings between MPI Ranks and Legion address spaces
@@ -294,8 +295,8 @@ legion_context_policy_t::connect_with_mpi(Legion::Context & ctx,
         forward_mapping.begin();
       it != forward_mapping.end(); it++)
     printf(
-      "MPI Rank %d maps to Legion Address Space %d\n", it->first, it->second);
-
+	   "%d of %d says:  MPI Rank %d maps to Legion Address Space %d\n", rank, size, it->first, it->second);
+ 
 } // legion_context_policy_t::connect_with_mpi
 
 } // namespace execution
