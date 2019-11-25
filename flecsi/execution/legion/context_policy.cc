@@ -293,10 +293,11 @@ legion_context_policy_t::connect_with_mpi(Legion::Context & ctx,
 
   for(std::map<int, Legion::AddressSpace>::const_iterator it =
         forward_mapping.begin();
-      it != forward_mapping.end(); it++)
+      it != forward_mapping.end(); it++){
     printf(
 	   "%d of %d says:  MPI Rank %d maps to Legion Address Space %d\n", rank, size, it->first, it->second);
- 
+    fflush(stdout);
+  }
 } // legion_context_policy_t::connect_with_mpi
 
 } // namespace execution
