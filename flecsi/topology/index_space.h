@@ -202,7 +202,7 @@ public:
     //-----------------------------------------------------------------//
     //! Initialize iterator from items and range
     //-----------------------------------------------------------------//
-    iterator_base_(storage_t * s,
+    FLECSI_INLINE_TARGET iterator_base_(storage_t * s,
       const id_storage_t & items,
       size_t index,
       size_t end)
@@ -504,7 +504,7 @@ public:
     //-----------------------------------------------------------------//
     //! Initialize iterator from items and range
     //-----------------------------------------------------------------//
-    iterator_(storage_t * s,
+    FLECSI_INLINE_TARGET iterator_(storage_t * s,
       const id_storage_t & items,
       size_t index,
       size_t end)
@@ -658,7 +658,7 @@ public:
     class ID_STORAGE_TYPE2,
     template<typename, typename...>
     class STORAGE_TYPE2>
-  index_space_u(const index_space_u<S,
+  FLECSI_INLINE_TARGET index_space_u(const index_space_u<S,
                   STORAGE2,
                   OWNED2,
                   SORTED2,
@@ -944,7 +944,7 @@ public:
   //! @param r offset range
   //-----------------------------------------------------------------//
   template<class S = T>
-  auto slice(const std::pair<size_t, size_t> & range) const {
+  FLECSI_INLINE_TARGET auto slice(const std::pair<size_t, size_t> & range) const {
     return index_space_u<S, false, false, SORTED, F, ID_STORAGE_TYPE,
       STORAGE_TYPE>(*this, range.first, range.second);
   }
@@ -957,7 +957,7 @@ public:
   //! @tparam S class to cast to
   //-----------------------------------------------------------------//
   template<class S = T>
-  auto slice() const {
+  FLECSI_INLINE_TARGET auto slice() const {
     return index_space_u<S, false, false, SORTED, F, ID_STORAGE_TYPE,
       STORAGE_TYPE>(*this, begin_, end_);
   }
@@ -1063,14 +1063,14 @@ public:
   //-----------------------------------------------------------------//
   //! Get the size of the index space
   //-----------------------------------------------------------------//
-  size_t size() const {
+  FLECSI_INLINE_TARGET size_t size() const {
     return end_ - begin_;
   }
 
   //-----------------------------------------------------------------//
   //! Return if the index space is empty, i.e. has no indices
   //-----------------------------------------------------------------//
-  bool empty() const {
+  FLECSI_INLINE_TARGET bool empty() const {
     return begin_ == end_;
   }
 

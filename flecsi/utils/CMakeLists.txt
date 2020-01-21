@@ -57,6 +57,7 @@ set(utils_HEADERS
   utility.h
 )
 
+set_property(SOURCE ../execution/serial/runtime_driver.cc APPEND PROPERTY COMPILE_FLAGS "-xcuda --cuda-gpu-arch=sm_70" )
 #------------------------------------------------------------------------------#
 # Add source files. Note that these will be "exported" to the parent
 # scope below.

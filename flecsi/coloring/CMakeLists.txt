@@ -30,6 +30,7 @@ set(coloring_HEADERS
   simple_box_colorer.h
 )
 
+set_property(SOURCE ../execution/legion/runtime_driver.cc APPEND PROPERTY COMPILE_FLAGS "-xcuda --cuda-gpu-arch=sm_70" )
 #------------------------------------------------------------------------------#
 # Runtime-specific files.
 #
@@ -101,6 +102,9 @@ set(coloring_SOURCES
 # Unit tests.
 #------------------------------------------------------------------------------#
 
+set_property(SOURCE test/dcrs.cc APPEND PROPERTY COMPILE_FLAGS "-xcuda --cuda-gpu-arch=sm_70" )
+set_property(SOURCE test/devel-dcrs.cc APPEND PROPERTY COMPILE_FLAGS "-xcuda --cuda-gpu-arch=sm_70" )
+set_property(SOURCE test/coloring.cc APPEND PROPERTY COMPILE_FLAGS "-xcuda --cuda-gpu-arch=sm_70" )
 cinch_add_unit(dcrs
   SOURCES test/dcrs.cc
   INPUTS

@@ -48,6 +48,11 @@ set(data_HEADERS
   storage_class.h
 )
 
+
+set_property(SOURCE test/client_registration.cc APPEND PROPERTY COMPILE_FLAGS "-xcuda --cuda-gpu-arch=sm_70" )
+set_property(SOURCE ../execution/driver_initialization.cc APPEND PROPERTY COMPILE_FLAGS "-xcuda --cuda-gpu-arch=sm_70" )
+set_property(SOURCE ../execution/legion/runtime_driver.cc APPEND PROPERTY COMPILE_FLAGS "-xcuda --cuda-gpu-arch=sm_70" )
+
 #------------------------------------------------------------------------------#
 # Add source files. Note that these will be "exported" to the parent
 # scope below.

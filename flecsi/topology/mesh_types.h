@@ -223,7 +223,7 @@ public:
     return conns_[FROM_DIM][to_dim];
   }
 
-  connectivity_t & get(size_t from_dim, size_t to_dim) {
+  FLECSI_INLINE_TARGET connectivity_t & get(size_t from_dim, size_t to_dim) {
     assert(from_dim <= DIM && "invalid from dimension");
     assert(to_dim <= DIM && "invalid to dimension");
     return conns_[from_dim][to_dim];
@@ -364,19 +364,19 @@ public:
   //-----------------------------------------------------------------//
   //! Get the normal (non-binding) connectivity of a domain.
   //-----------------------------------------------------------------//
-  virtual const connectivity_t &
+  FLECSI_INLINE_TARGET virtual const connectivity_t &
   get_connectivity(size_t domain, size_t from_dim, size_t to_dim) const = 0;
 
   //-----------------------------------------------------------------//
   //! Get the normal (non-binding) connectivity of a domain.
   //-----------------------------------------------------------------//
-  virtual connectivity_t &
+  FLECSI_INLINE_TARGET virtual connectivity_t &
   get_connectivity(size_t domain, size_t from_dim, size_t to_dim) = 0;
 
   //-----------------------------------------------------------------//
   //! Get the binding connectivity of specified domains.
   //-----------------------------------------------------------------//
-  virtual const connectivity_t & get_connectivity(size_t from_domain,
+  FLECSI_INLINE_TARGET virtual const connectivity_t & get_connectivity(size_t from_domain,
     size_t to_domain,
     size_t from_dim,
     size_t to_dim) const = 0;
@@ -384,7 +384,7 @@ public:
   //-----------------------------------------------------------------//
   //! Get the binding connectivity of specified domains.
   //-----------------------------------------------------------------//
-  virtual connectivity_t & get_connectivity(size_t from_domain,
+  FLECSI_INLINE_TARGET virtual connectivity_t & get_connectivity(size_t from_domain,
     size_t to_domain,
     size_t from_dim,
     size_t to_dim) = 0;
