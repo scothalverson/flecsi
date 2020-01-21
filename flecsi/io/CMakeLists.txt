@@ -36,6 +36,8 @@ if(ENABLE_HDF5)
 
 endif() # ENABLE_HDF5
 
+set_property(SOURCE ../execution/legion/runtime_driver.cc APPEND PROPERTY COMPILE_FLAGS "-xcuda --cuda-gpu-arch=sm_70" )
+set_property(SOURCE legion/policy.cc APPEND PROPERTY COMPILE_FLAGS "-xcuda --cuda-gpu-arch=sm_70" )
 set(DRIVER_INITIALIZATION ../execution/driver_initialization.cc)
 
 #------------------------------------------------------------------------------#

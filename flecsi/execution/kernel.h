@@ -90,7 +90,32 @@ private:
 
 #define forall(it, iterator, name)                                             \
   forall_t{iterator, name} + KOKKOS_LAMBDA(auto it)
+/*
+template<typename ITERATOR, typename LAMBDA, typename REDUCER, typename REDUCED>
+void
+parallel_reduce(ITERATOR iterator, LAMBDA lambda, REDUCER reducer, REDUCED reduced, std::string const & name = "") {
 
+  struct functor_t {
+
+    functor_t(ITERATOR & iterator, LAMBDA & lambda, REDUCER & reducer, REDUCED & reduced)
+      : iterator_(iterator), lambda_(lambda), reducer_(reducer), reduced_(reduced) {}
+
+    KOKKOS_INLINE_FUNCTION void operator()(int i, REDUCED reduced) const {
+      lambda_(iterator_[i], reduced);
+    } // operator()
+
+  private:
+    ITERATOR & iterator_;
+    LAMBDA & lambda_;
+    REDUCER & reducer_;
+    REDUCED & reduced_;
+
+  }; // struct functor_t
+
+  Kokkos::parallel_reduce(name, iterator.size(), functor_t{iterator, lambda, reducer, reduced});
+
+} // parallel_reduce
+*/
 } // namespace flecsi
 #endif
 

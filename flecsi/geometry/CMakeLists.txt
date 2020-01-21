@@ -22,6 +22,7 @@ set(geometry_HEADERS
   space_vector.h
 )
 
+set_property(SOURCE ../execution/legion/runtime_driver.cc APPEND PROPERTY COMPILE_FLAGS "-xcuda --cuda-gpu-arch=sm_70" )
 #------------------------------------------------------------------------------#
 # Runtime-specific files.
 #

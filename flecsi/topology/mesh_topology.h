@@ -196,13 +196,13 @@ public:
 
   // The mesh retains ownership of the entities and deletes them
   // upon mesh destruction
-  virtual ~mesh_topology_u() {}
+  FLECSI_INLINE_TARGET virtual ~mesh_topology_u() {}
 
   //--------------------------------------------------------------------------//
   //! Initialize the mesh storage after it has been set
   //! This is needed to initialize raw connectivity buffers,
   //--------------------------------------------------------------------------//
-  void initialize_storage() {
+  FLECSI_INLINE_TARGET void initialize_storage() {
 
     for(size_t from_domain = 0; from_domain < MESH_TYPE::num_domains;
         ++from_domain) {
@@ -239,7 +239,7 @@ public:
   //! @tparam VERT_TYPE vertices types
   //--------------------------------------------------------------------------//
   template<size_t DOM, class CELL_TYPE, typename VERT_TYPE>
-  void init_cell(CELL_TYPE * cell, VERT_TYPE && verts) {
+  FLECSI_INLINE_TARGET void init_cell(CELL_TYPE * cell, VERT_TYPE && verts) {
     init_cell_<DOM>(cell, std::forward<VERT_TYPE>(verts));
   } // init_cell
 
@@ -252,7 +252,7 @@ public:
   //! @tparam VERT_TYPE vertices initializer
   //--------------------------------------------------------------------------//
   template<size_t DOM, class CELL_TYPE, typename VERT_TYPE>
-  void init_cell(CELL_TYPE * cell, std::initializer_list<VERT_TYPE *> verts) {
+  FLECSI_INLINE_TARGET void init_cell(CELL_TYPE * cell, std::initializer_list<VERT_TYPE *> verts) {
     init_cell_<DOM>(cell, verts);
   } // init_cell
 
@@ -273,7 +273,7 @@ public:
     size_t TO_DIM,
     class ENT_TYPE1,
     class ENT_TYPE2>
-  void init_entity(ENT_TYPE1 * super, ENT_TYPE2 && subs) {
+  FLECSI_INLINE_TARGET void init_entity(ENT_TYPE1 * super, ENT_TYPE2 && subs) {
     init_entity_<DOM, FROM_DIM, TO_DIM>(super, std::forward<ENT_TYPE2>(subs));
   } // init_entity
 
@@ -283,7 +283,7 @@ public:
     size_t TO_DIM,
     class ENT_TYPE1,
     class ENT_TYPE2>
-  void init_entity(ENT_TYPE1 * super, ENT_TYPE2 && subs) {
+  FLECSI_INLINE_TARGET void init_entity(ENT_TYPE1 * super, ENT_TYPE2 && subs) {
     init_entity_<FROM_DOM, TO_DOM, FROM_DIM, TO_DIM>(
       super, std::forward<ENT_TYPE2>(subs));
   } // init_entity
@@ -305,7 +305,7 @@ public:
     size_t TO_DIM,
     class ENT_TYPE1,
     class ENT_TYPE2>
-  void init_entity(ENT_TYPE1 * super, std::initializer_list<ENT_TYPE2 *> subs) {
+  FLECSI_INLINE_TARGET void init_entity(ENT_TYPE1 * super, std::initializer_list<ENT_TYPE2 *> subs) {
     init_entity_<DOM, FROM_DIM, TO_DIM>(super, subs);
   } // init_entity
 
@@ -327,7 +327,7 @@ public:
   //! @tparam DOM domain
   //------------------------------------------------------------------------//
   template<size_t DOM = 0>
-  void init() {
+  FLECSI_INLINE_TARGET void init() {
     // Compute mesh connectivity
     using TP = typename MESH_TYPE::connectivities;
     compute_connectivity_u<DOM, std::tuple_size<TP>::value, TP>::compute(*this);
@@ -344,7 +344,7 @@ public:
   //! @tparam DOM domain
   //--------------------------------------------------------------------------//
   template<size_t DOM = 0>
-  void init_bindings() {
+  FLECSI_INLINE_TARGET void init_bindings() {
     using BT = typename MESH_TYPE::bindings;
     compute_bindings_u<DOM, std::tuple_size<BT>::value, BT>::compute(*this);
   } // init
@@ -357,7 +357,7 @@ public:
   //! @tparam DIM topological dimension
   //--------------------------------------------------------------------------//
   template<size_t DIM, size_t DOM = 0>
-  decltype(auto) num_entities() const {
+  FLECSI_INLINE_TARGET decltype(auto) num_entities() const {
     return base_t::ms_->index_spaces[DOM][DIM].size();
   } // num_entities
 
@@ -371,7 +371,7 @@ public:
   //! @param partition e.g. all, owned, shared, etc.
   //--------------------------------------------------------------------------//
   template<size_t DIM, size_t DOM = 0>
-  decltype(auto) num_entities(partition_t partition) const {
+  FLECSI_INLINE_TARGET decltype(auto) num_entities(partition_t partition) const {
     return base_t::ms_->partition_index_spaces[partition][DOM][DIM].size();
   } // num_entities
 
@@ -379,7 +379,7 @@ public:
   //! Get the connectivity of the specified from/to domain and from/to
   //! topological dimensions.
   //--------------------------------------------------------------------------//
-  const connectivity_t & get_connectivity(size_t from_domain,
+  FLECSI_INLINE_TARGET const connectivity_t & get_connectivity(size_t from_domain,
     size_t to_domain,
     size_t from_dim,
     size_t to_dim) const override {
@@ -390,7 +390,7 @@ public:
   //! Get the connectivity of the specified from/to domain and from/to
   //! topological dimensions.
   //--------------------------------------------------------------------------//
-  connectivity_t & get_connectivity(size_t from_domain,
+  FLECSI_INLINE_TARGET connectivity_t & get_connectivity(size_t from_domain,
     size_t to_domain,
     size_t from_dim,
     size_t to_dim) override {
@@ -401,7 +401,7 @@ public:
   //! Get the connectivity of the specified domain and from/to topological
   //! dimensions.
   //--------------------------------------------------------------------------//
-  const connectivity_t & get_connectivity(size_t domain,
+  FLECSI_INLINE_TARGET const connectivity_t & get_connectivity(size_t domain,
     size_t from_dim,
     size_t to_dim) const override {
     return get_connectivity_(domain, domain, from_dim, to_dim);
@@ -411,7 +411,7 @@ public:
   //! Get the connectivity of the specified domain and from/to topological
   //! dimensions.
   //--------------------------------------------------------------------------//
-  connectivity_t &
+  FLECSI_INLINE_TARGET connectivity_t &
   get_connectivity(size_t domain, size_t from_dim, size_t to_dim) override {
     return get_connectivity_(domain, domain, from_dim, to_dim);
   } // get_connectivity
@@ -431,7 +431,7 @@ public:
   //! @param dim topological dimension
   //--------------------------------------------------------------------------//
   template<size_t DOM = 0>
-  const auto & get_index_space_(size_t dim) const {
+  FLECSI_INLINE_TARGET const auto & get_index_space_(size_t dim) const {
     return base_t::ms_->index_spaces[DOM][dim];
   } // get_entities_
 
@@ -443,7 +443,7 @@ public:
   //! @param dim topological dimension
   //--------------------------------------------------------------------------//
   template<size_t DOM = 0>
-  auto & get_index_space_(size_t dim) {
+  FLECSI_INLINE_TARGET auto & get_index_space_(size_t dim) {
     return base_t::ms_->index_spaces[DOM][dim];
   } // get_entities_
 
@@ -458,7 +458,7 @@ public:
   //! @param partition e.g. all, owned, shared, etc.
   //--------------------------------------------------------------------------//
   template<size_t DOM = 0>
-  const auto & get_index_space_(size_t dim, partition_t partition) const {
+  FLECSI_INLINE_TARGET const auto & get_index_space_(size_t dim, partition_t partition) const {
     return base_t::ms_->partition_index_spaces[partition][DOM][dim];
   } // get_entities_
 
@@ -473,12 +473,12 @@ public:
   //! @param partition e.g. all, owned, shared, etc.
   //--------------------------------------------------------------------------//
   template<size_t DOM = 0>
-  auto & get_index_space_(size_t dim, partition_t partition) {
+  FLECSI_INLINE_TARGET auto & get_index_space_(size_t dim, partition_t partition) {
     return base_t::ms_->partition_index_spaces[partition][DOM][dim];
   } // get_entities_
 
   template<size_t DIM, size_t DOM = 0>
-  auto get_entities() const {
+  FLECSI_INLINE_TARGET auto get_entities() const {
     using etype = entity_type<DIM, DOM>;
     return static_cast<etype *>(base_t::ms_->index_spaces[DOM][DIM][0]);
   } // get_entity
@@ -491,7 +491,7 @@ public:
   //! @tparam DIM topological dimension
   //--------------------------------------------------------------------------//
   template<size_t DIM, size_t DOM = 0>
-  auto get_entity(id_t global_id) const {
+  FLECSI_INLINE_TARGET auto get_entity(id_t global_id) const {
     using etype = entity_type<DIM, DOM>;
     return static_cast<etype *>(
       base_t::ms_->index_spaces[DOM][DIM][global_id.entity()]);
@@ -509,7 +509,7 @@ public:
   //! @param global_id entity global id
   //--------------------------------------------------------------------------//
   template<size_t DOM = 0>
-  auto get_entity(size_t dim, id_t global_id) {
+  FLECSI_INLINE_TARGET auto get_entity(size_t dim, id_t global_id) {
     return base_t::ms_->index_spaces[DOM][dim][global_id.entity()];
   } // get_entity
 
@@ -526,7 +526,7 @@ public:
   //! @param partition e.g. all, owned, shared, etc.
   //--------------------------------------------------------------------------//
   template<size_t DIM, size_t DOM = 0>
-  auto get_entity(id_t global_id, partition_t partition) const {
+  FLECSI_INLINE_TARGET auto get_entity(id_t global_id, partition_t partition) const {
     using etype = entity_type<DIM, DOM>;
     return static_cast<etype *>(
       base_t::ms_
@@ -545,7 +545,7 @@ public:
   //! @param global_id entity global id
   //--------------------------------------------------------------------------//
   template<size_t DOM = 0>
-  auto get_entity(size_t dim, id_t global_id, partition_t partition) {
+  FLECSI_INLINE_TARGET auto get_entity(size_t dim, id_t global_id, partition_t partition) {
     return base_t::ms_
       ->partition_index_spaces[partition][DOM][dim][global_id.entity()];
   } // get_entity
@@ -565,7 +565,7 @@ public:
     size_t FROM_DOM,
     size_t TO_DOM = FROM_DOM,
     class ENT_TYPE>
-  const auto entities(const ENT_TYPE * e) const {
+  FLECSI_INLINE_TARGET const auto entities(const ENT_TYPE * e) const {
 
     const connectivity_t & c =
       get_connectivity(FROM_DOM, TO_DOM, ENT_TYPE::dimension, DIM);
@@ -592,7 +592,7 @@ public:
     size_t FROM_DOM,
     size_t TO_DOM = FROM_DOM,
     class ENT_TYPE>
-  auto entities(ENT_TYPE * e) {
+  FLECSI_INLINE_TARGET auto entities(ENT_TYPE * e) {
     connectivity_t & c =
       get_connectivity(FROM_DOM, TO_DOM, ENT_TYPE::dimension, DIM);
     assert(!c.empty() && "empty connectivity");
@@ -618,7 +618,7 @@ public:
     size_t FROM_DOM = 0,
     size_t TO_DOM = FROM_DOM,
     class ENT_TYPE>
-  decltype(auto) entities(domain_entity_u<FROM_DOM, ENT_TYPE> & e) const {
+  FLECSI_INLINE_TARGET decltype(auto) entities(domain_entity_u<FROM_DOM, ENT_TYPE> & e) const {
     return entities<DIM, FROM_DOM, TO_DOM>(e.entity());
   } // entities
 
@@ -637,7 +637,7 @@ public:
     size_t FROM_DOM = 0,
     size_t TO_DOM = FROM_DOM,
     class ENT_TYPE>
-  decltype(auto) entities(domain_entity_u<FROM_DOM, ENT_TYPE> & e) {
+  FLECSI_INLINE_TARGET decltype(auto) entities(domain_entity_u<FROM_DOM, ENT_TYPE> & e) {
     return entities<DIM, FROM_DOM, TO_DOM>(e.entity());
   } // entities
 
@@ -649,7 +649,7 @@ public:
   //! @tparam DIM to topological dimension
   //--------------------------------------------------------------------------//
   template<size_t DIM, size_t DOM = 0>
-  auto entities() const {
+  FLECSI_INLINE_TARGET auto entities() const {
     using etype = entity_type<DIM, DOM>;
     using dtype = domain_entity_u<DOM, etype>;
     return base_t::ms_->index_spaces[DOM][DIM].template slice<dtype>();
@@ -666,7 +666,7 @@ public:
   //! @param partition e.g. all, owned, shared, etc.
   //--------------------------------------------------------------------------//
   template<size_t DIM, size_t DOM = 0>
-  auto entities(partition_t partition) const {
+  FLECSI_INLINE_TARGET auto entities(partition_t partition) const {
     using etype = entity_type<DIM, DOM>;
     using dtype = domain_entity_u<DOM, etype>;
     return base_t::ms_->partition_index_spaces[partition][DOM][DIM]
@@ -2104,7 +2104,7 @@ private:
   //! Implementation of get_connectivity for various get_connectivity
   //! convenience methods.
   //--------------------------------------------------------------------------//
-  const connectivity_t & get_connectivity_(size_t from_domain,
+  FLECSI_INLINE_TARGET const connectivity_t & get_connectivity_(size_t from_domain,
     size_t to_domain,
     size_t from_dim,
     size_t to_dim) const {
@@ -2117,7 +2117,7 @@ private:
   //! Implementation of get_connectivity for various get_connectivity
   //! convenience methods.
   //--------------------------------------------------------------------------//
-  connectivity_t & get_connectivity_(size_t from_domain,
+  FLECSI_INLINE_TARGET connectivity_t & get_connectivity_(size_t from_domain,
     size_t to_domain,
     size_t from_dim,
     size_t to_dim) {
@@ -2135,7 +2135,7 @@ private:
   //! @tparam FROM_DIM from topological dimension
   //--------------------------------------------------------------------------//
   template<size_t FROM_DOM, size_t TO_DOM, size_t FROM_DIM>
-  connectivity_t & get_connectivity_(size_t to_dim) {
+  FLECSI_INLINE_TARGET connectivity_t & get_connectivity_(size_t to_dim) {
     return base_t::ms_->topology[FROM_DOM][TO_DOM].template get<FROM_DIM>(
       to_dim);
   } // get_connectivity
@@ -2150,7 +2150,7 @@ private:
   //! @tparam TO_DIM to topological dimension
   //--------------------------------------------------------------------------//
   template<size_t FROM_DOM, size_t TO_DOM, size_t FROM_DIM, size_t TO_DIM>
-  connectivity_t & get_connectivity_() {
+  FLECSI_INLINE_TARGET connectivity_t & get_connectivity_() {
     return base_t::ms_->topology[FROM_DOM][TO_DOM]
       .template get<FROM_DIM, TO_DIM>();
   } // get_connectivity
@@ -2159,7 +2159,7 @@ private:
   //! Implementation of get_connectivity for various get_connectivity
   //! convenience methods.
   //--------------------------------------------------------------------------//
-  const connectivity_t &
+  FLECSI_INLINE_TARGET const connectivity_t &
   get_connectivity_(size_t domain, size_t from_dim, size_t to_dim) const {
     return get_connectivity_(domain, domain, from_dim, to_dim);
   } // get_connectivity
@@ -2168,7 +2168,7 @@ private:
   //! Implementation of get_connectivity for various get_connectivity
   //! convenience methods.
   //--------------------------------------------------------------------------//
-  connectivity_t &
+  FLECSI_INLINE_TARGET connectivity_t &
   get_connectivity_(size_t domain, size_t from_dim, size_t to_dim) {
     return get_connectivity_(domain, domain, from_dim, to_dim);
   } // get_connectivity
