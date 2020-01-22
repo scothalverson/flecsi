@@ -568,7 +568,7 @@ public:
   FLECSI_INLINE_TARGET const auto entities(const ENT_TYPE * e) const {
 
     const connectivity_t & c =
-      get_connectivity(FROM_DOM, TO_DOM, ENT_TYPE::dimension, DIM);
+      get_connectivity_(FROM_DOM, TO_DOM, ENT_TYPE::dimension, DIM);
     assert(!c.empty() && "empty connectivity");
 
     using etype = entity_type<DIM, TO_DOM>;
@@ -2108,8 +2108,8 @@ private:
     size_t to_domain,
     size_t from_dim,
     size_t to_dim) const {
-    assert(from_domain < MESH_TYPE::num_domains && "invalid from domain");
-    assert(to_domain < MESH_TYPE::num_domains && "invalid to domain");
+    //assert(from_domain < MESH_TYPE::num_domains && "invalid from domain");
+    //assert(to_domain < MESH_TYPE::num_domains && "invalid to domain");
     return base_t::ms_->topology[from_domain][to_domain].get(from_dim, to_dim);
   } // get_connectivity
 
@@ -2121,8 +2121,8 @@ private:
     size_t to_domain,
     size_t from_dim,
     size_t to_dim) {
-    assert(from_domain < MESH_TYPE::num_domains && "invalid from domain");
-    assert(to_domain < MESH_TYPE::num_domains && "invalid to domain");
+    //assert(from_domain < MESH_TYPE::num_domains && "invalid from domain");
+    //assert(to_domain < MESH_TYPE::num_domains && "invalid to domain");
     return base_t::ms_->topology[from_domain][to_domain].get(from_dim, to_dim);
   } // get_connectivity
 
